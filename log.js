@@ -148,10 +148,9 @@ var timeZones = {
     });
   
     L.marker(coordinates).addTo(map).bindPopup(city).openPopup();
-    getCoordinates(city);
   }
   
   updateIndiaClock();
   updateClockForCountry("United States");
-  showLocation("New York", getCoordinates("New York"));
+  showLocation(city, coordinates);
   
