@@ -6,7 +6,7 @@
 }
 
 body {
-    background-color: #f0f0f0;
+    background-color: #1a1919;
     color: #333;
     font-family: 'Poppins', sans-serif;
 }
@@ -74,7 +74,7 @@ img {
     border: 1px solid #ddd;
     border-radius: 20px;
     background: transparent;
-    color: #000;
+    color: #fff;
     text-align: center;
     padding: 10px;
     box-shadow: 0 4px 8px rgba(87, 104, 107, 0.1);
@@ -133,7 +133,7 @@ img {
     margin-top: 20px;
     width: 100%;
     color: white;
-    position: fixed;
+    position: flex;
     bottom: 0;
 }
 
@@ -143,12 +143,12 @@ img {
 }
 
 .card {
-    width: 100%; /* Use a percentage width for responsiveness */
-    max-width: 320px; /* Set a max-width to maintain size limits */
-    height: auto; /* Set height to auto for responsiveness */
+
+    max-width: 320px;
+    height: 32rem; /* Keep card height fixed for smaller screens */
     background: linear-gradient(135deg, #00feba, #5b548a);
     color: #fff;
-    margin: 80px 20px; /* Adjusted margins for better responsiveness */
+    margin: 20px; /* Adjusted margin for spacing */
     border-radius: 20px;
     padding: 40px 35px;
     text-align: center;
@@ -156,19 +156,21 @@ img {
 
 .weather-icon {
     width: 100%; /* Use a percentage width for responsiveness */
-    max-width: 120px; /* Set a max-width to maintain size limits */
+    max-width: 140px; /* Set a max-width to maintain size limits */
     margin-top: 15px;
 }
 
 .weather h1 {
-    font-size: 3rem; /* Adjusted font-size for better responsiveness */
+    font-size: 2rem; /* Adjusted font-size for better responsiveness */
     font-weight: 300;
+    margin-top: 40px;
 }
 
 .weather h2 {
     font-size: 2rem; /* Adjusted font-size for better responsiveness */
     font-weight: 200;
     margin-top: -4px;
+    margin-bottom: 90px;
 }
 
 .detail {
@@ -191,7 +193,7 @@ img {
 .col {
     display: flex;
     align-items: center;
-    text-align: left;
+    text-align: center;
 }
 
 .col img {
