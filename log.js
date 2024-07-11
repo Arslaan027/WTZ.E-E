@@ -53,9 +53,10 @@ var timeZones = {
   };
   
   var intervalId;
+  var map; // Declare map variable at a higher scope
   
   function getCoordinates(city) {
-    return coords[city];
+    return coords[city] || null;
   }
   
   const apiKey = "51ed8bbc41a5430e96be18a1fd70cd6f";
@@ -135,22 +136,30 @@ var timeZones = {
   });
   
   function showLocation(city, coordinates) {
-    const map = L.map("mapid").setView(coordinates, 3);
+    if (!map) {
+      // Initialize the map only once
+      map = L.map("mapid").setView(coordinates, 3);
   
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    }).addTo(map);
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      }).addTo(map);
+    } else {
+      // Update the map view to the new coordinates
+      map.setView(coordinates, 3);
   
-    map.eachLayer(function (layer) {
-      if (layer instanceof L.Marker) {
-        map.removeLayer(layer);
-      }
-    });
+      // Remove existing markers
+      map.eachLayer(function (layer) {
+        if (layer instanceof L.Marker) {
+          map.removeLayer(layer);
+        }
+      });
+    }
   
+    // Add new marker
     L.marker(coordinates).addTo(map).bindPopup(city).openPopup();
   }
   
   updateIndiaClock();
   updateClockForCountry("United States");
-  showLocation(city, coordinates);
+  showLocation("New York", getCoordinates("New York"));
   
