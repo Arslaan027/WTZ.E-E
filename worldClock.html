@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <title>Time Zones</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="nav">
+        <h1>Time Zones</h1>
+    </div>
+    <div class="stack">
+        <div class="card">
+            <div class="weather">
+                <img src="/WTZ.E&E/image/clear.png" class="weather-icon">
+                <h1 class="temp">22°c</h1>
+                <h2 class="cityname">New York</h2>
+                <div class="detail">
+                    <div class="col">
+                        <img src="/WTZ.E&E/image/humidity.png" alt="">
+                        <div>
+                            <p class="humidity">50%</p>
+                            <p>Humidity</p>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <img src="/WTZ.E&E/image/wind.png" alt="">
+                        <div>
+                            <p class="Wind">15 km/h</p>
+                            <p>Wind Speed</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+            <div class="boxes">
+                <!-- India Clock -->
+                <div class="clock">
+                    <h2>India</h2>
+                    <div id="india-date">Day 00 Month 0000</div>
+                    <ul>
+                        <li id="india-hours">00</li>
+                        <li id="india-point">:</li>
+                        <li id="india-min">00</li>
+                        <li id="india-point">:</li>
+                        <li id="india-sec">00</li>
+                    </ul>
+                </div>
+                <div id="time-difference-container">
+
+                    <div id="time-difference"></div>
+                </div>
+                <!-- Other Time Zone Clocks -->
+                <div class="clock">
+                    <h2 id="country-name"></h2>
+                    <div id="date">Day 00 Month 0000</div>
+                    <ul>
+                        <li id="hours">00</li>
+                        <li id="point">:</li>
+                        <li id="min">00</li>
+                        <li id="point">:</li>
+                        <li id="sec">00</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="countryList">
+                <ul>
+                    <li data-country="United States">United States</li>
+                    <li data-country="London">London</li>
+                    <li data-country="Canada">Canada</li>
+                    <li data-country="Australia">Australia</li>
+                    <li data-country="China">China</li>
+                    <li data-country="Japan">Japan</li>
+                    <li data-country="Germany">Germany</li>
+                    <li data-country="France">France</li>
+                    <li data-country="Russia">Russia</li>
+                    <li data-country="Brazil">Brazil</li>
+                    <li data-country="South Africa">South Africa</li>
+                    <li data-country="UAE">UAE</li>
+                    <li data-country="Singapore">Singapore</li>
+                    <li data-country="Saudi Arabia">Saudi Arabia</li>
+                    <li data-country="Nepal">Nepal</li>
+                </ul>
+            </div>
+        
+    </div>
+    <div class="foot">
+        <h4>Word is Time, Time is World</h4>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.34/moment-timezone-with-data.min.js"></script>
+
+    <script src="log.js"></script>
+</body>
+
+</html>
