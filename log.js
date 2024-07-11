@@ -1,131 +1,156 @@
 var timeZones = {
-  "United States": "America/New_York",
-  London: "Europe/London",
-  Canada: "America/Toronto",
-  Australia: "Australia/Sydney",
-  China: "Asia/Shanghai",
-  Japan: "Asia/Tokyo",
-  Germany: "Europe/Berlin",
-  France: "Europe/Paris",
-  Russia: "Europe/Moscow",
-  Brazil: "America/Sao_Paulo",
-  "South Africa": "Africa/Johannesburg",
-  UAE: "Asia/Dubai",
-  Singapore: "Asia/Singapore",
-  "Saudi Arabia": "Asia/Riyadh",
-  Nepal: "Asia/Kathmandu",
-};
-
-const cities = {
-  "United States": "New York",
-  London: "London",
-  Canada: "Toronto",
-  Australia: "Sydney",
-  China: "Shanghai",
-  Japan: "Tokyo",
-  Germany: "Berlin",
-  France: "Paris",
-  Russia: "Moscow",
-  Brazil: "Sao Paulo",
-  "South Africa": "Johannesburg",
-  UAE: "Dubai",
-  Singapore: "Singapore",
-  "Saudi Arabia": "Riyadh",
-  Nepal: "Kathmandu",
-};
-
-var intervalId;
-
-const apiKey = "51ed8bbc41a5430e96be18a1fd70cd6f";
-
-async function checkWeather(city) {
-  const apiURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
-  const response = await fetch(apiURL);
-  var data = await response.json();
-  document.querySelector(".cityname").innerText = data.name;
-  document.querySelector(".temp").innerText = Math.floor(data.main.temp) + "°c";
-  document.querySelector(".humidity").innerText = data.main.humidity + "%";
-  document.querySelector(".Wind").innerText = data.wind.speed + "km/h";
-  console.log("IMHERE");
-}
-
-function updateClockForCountry(country) {
-  var timeZone = timeZones[country];
-
-  clearInterval(intervalId);
-
-  intervalId = setInterval(function () {
-    var now = moment().tz(timeZone);
-
-    var h = now.format("HH");
-    var m = now.format("mm");
-    var s = now.format("ss");
-    var date = now.format("dddd D MMMM YYYY");
-
-    document.getElementById("date").innerHTML = date;
-    document.getElementById("hours").innerText = h;
-    document.getElementById("min").innerHTML = m;
-    document.getElementById("sec").innerHTML = s;
-
-    document.getElementById("country-name").innerText = country;
-
-    updateTimeGap(timeZone);
-  }, 1000);
-}
-
-function updateIndiaClock() {
-  setInterval(function () {
-    var now = moment().tz("Asia/Kolkata");
-
-    var h = now.format("HH");
-    var m = now.format("mm");
-    var s = now.format("ss");
-    var date = now.format("dddd D MMMM YYYY");
-
-    document.getElementById("india-date").innerHTML = date;
-    document.getElementById("india-hours").innerText = h;
-    document.getElementById("india-min").innerHTML = m;
-    document.getElementById("india-sec").innerHTML = s;
-  }, 1000);
-}
-
-function updateTimeGap(selectedTimeZone) {
-  var now = moment();
-  var indiaOffset = moment.tz.zone("Asia/Kolkata").utcOffset(now);
-  var selectedOffset = moment.tz.zone(selectedTimeZone).utcOffset(now);
-
-  var timeDifference = (selectedOffset - indiaOffset) / 60;
-
-  document.getElementById(
-    "time-difference"
-  ).innerText = `TimeGap: ${timeDifference} hours`;
-}
-
-document
-  .getElementById("countryList")
-  .addEventListener("click", function (event) {
+    "United States": "America/New_York",
+    London: "Europe/London",
+    Canada: "America/Toronto",
+    Australia: "Australia/Sydney",
+    China: "Asia/Shanghai",
+    Japan: "Asia/Tokyo",
+    Germany: "Europe/Berlin",
+    France: "Europe/Paris",
+    Russia: "Europe/Moscow",
+    Brazil: "America/Sao_Paulo",
+    "South Africa": "Africa/Johannesburg",
+    UAE: "Asia/Dubai",
+    Singapore: "Asia/Singapore",
+    "Saudi Arabia": "Asia/Riyadh",
+    Nepal: "Asia/Kathmandu",
+  };
+  
+  const cities = {
+    "United States": "New York",
+    London: "London",
+    Canada: "Toronto",
+    Australia: "Sydney",
+    China: "Shanghai",
+    Japan: "Tokyo",
+    Germany: "Berlin",
+    France: "Paris",
+    Russia: "Moscow",
+    Brazil: "Sao Paulo",
+    "South Africa": "Johannesburg",
+    UAE: "Dubai",
+    Singapore: "Singapore",
+    "Saudi Arabia": "Riyadh",
+    Nepal: "Kathmandu",
+  };
+  
+  const coords = {
+    "New York": [40.712776, -74.005974],
+    London: [51.507351, -0.127758],
+    Toronto: [43.653225, -79.383186],
+    Sydney: [-33.868820, 151.209290],
+    Shanghai: [31.2304, 121.4737],
+    Tokyo: [35.6762, 139.6503],
+    Berlin: [52.5200, 13.4050],
+    Paris: [48.8566, 2.3522],
+    Moscow: [55.7558, 37.6173],
+    "Sao Paulo": [-23.5505, -46.6333],
+    Johannesburg: [-26.2041, 28.0473],
+    Dubai: [25.276987, 55.296249],
+    Singapore: [1.3521, 103.8198],
+    Riyadh: [24.7136, 46.6753],
+    Kathmandu: [27.7172, 85.3240]
+  };
+  
+  var intervalId;
+  
+  function getCoordinates(city) {
+    return coords[city];
+  }
+  
+  const apiKey = "51ed8bbc41a5430e96be18a1fd70cd6f";
+  
+  async function checkWeather(city) {
+    const apiURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+    const response = await fetch(apiURL);
+    const data = await response.json();
+    document.querySelector(".cityname").innerText = data.name;
+    document.querySelector(".temp").innerText = Math.floor(data.main.temp) + "°C";
+    document.querySelector(".humidity").innerText = data.main.humidity + "%";
+    document.querySelector(".Wind").innerText = data.wind.speed + " km/h";
+  }
+  
+  function updateClockForCountry(country) {
+    const timeZone = timeZones[country];
+  
+    clearInterval(intervalId);
+  
+    intervalId = setInterval(function () {
+      const now = moment().tz(timeZone);
+  
+      const h = now.format("HH");
+      const m = now.format("mm");
+      const s = now.format("ss");
+      const date = now.format("dddd D MMMM YYYY");
+  
+      document.getElementById("date").innerHTML = date;
+      document.getElementById("hours").innerText = h;
+      document.getElementById("min").innerHTML = m;
+      document.getElementById("sec").innerHTML = s;
+  
+      document.getElementById("country-name").innerText = country;
+  
+      updateTimeGap(timeZone);
+    }, 1000);
+  }
+  
+  function updateIndiaClock() {
+    setInterval(function () {
+      const now = moment().tz("Asia/Kolkata");
+  
+      const h = now.format("HH");
+      const m = now.format("mm");
+      const s = now.format("ss");
+      const date = now.format("dddd D MMMM YYYY");
+  
+      document.getElementById("india-date").innerHTML = date;
+      document.getElementById("india-hours").innerText = h;
+      document.getElementById("india-min").innerHTML = m;
+      document.getElementById("india-sec").innerHTML = s;
+    }, 1000);
+  }
+  
+  function updateTimeGap(selectedTimeZone) {
+    const now = moment();
+    const indiaOffset = moment.tz.zone("Asia/Kolkata").utcOffset(now);
+    const selectedOffset = moment.tz.zone(selectedTimeZone).utcOffset(now);
+  
+    const timeDifference = (selectedOffset - indiaOffset) / 60;
+  
+    document.getElementById("time-difference").innerText = `TimeGap: ${timeDifference} hours`;
+  }
+  
+  document.getElementById("countryList").addEventListener("click", function (event) {
     if (event.target.tagName.toLowerCase() === "li") {
-      var country = event.target.getAttribute("data-country");
-      var city = cities[country];
-      updateClockForCountry(country);
-      checkWeather(city);
+      const country = event.target.getAttribute("data-country");
+      const city = cities[country];
+  
+      const coordinates = getCoordinates(city);
+      if (coordinates) {
+        updateClockForCountry(country);
+        checkWeather(city);
+        showLocation(city, coordinates);
+      }
     }
   });
-function showLocation() {
-  var map = L.map("mapid").setView([27.959463, 78.08266], 13);
-
-  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    attribution:
-      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-  }).addTo(map);
-
-  L.marker([27.959463, 78.08266])
-    .addTo(map)
-    .bindPopup("Environmental and Engineering Solution");
-
-  L.marker([27.918733, 78.091695]).addTo(map).bindPopup("My Home").openPopup();
-}
-
-updateIndiaClock();
-updateClockForCountry("United States");
-showLocation();
+  
+  function showLocation(city, coordinates) {
+    const map = L.map("mapid").setView(coordinates, 3);
+  
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    }).addTo(map);
+  
+    map.eachLayer(function (layer) {
+      if (layer instanceof L.Marker) {
+        map.removeLayer(layer);
+      }
+    });
+  
+    L.marker(coordinates).addTo(map).bindPopup(city).openPopup();
+  }
+  
+  updateIndiaClock();
+  updateClockForCountry("United States");
+  showLocation(city, coordinates);
+  
