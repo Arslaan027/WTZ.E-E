@@ -107,25 +107,82 @@ document
     if (event.target.tagName.toLowerCase() === "li") {
       var country = event.target.getAttribute("data-country");
       var city = cities[country];
-      updateClockForCountry(country);
-      checkWeather(city);
+
+      var coordinates = getCoordinates(city);
+
+      if (coordinates) {
+        updateClockForCountry(country);
+        checkWeather(city);
+        showLocation(coordinates);
+      }
     }
   });
+
 function showLocation() {
-  var map = L.map("mapid").setView([27.959463, 78.08266], 13);
+  var map = L.map("mapid").setView([27.959463, 78.08266], 3); 
 
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     attribution:
       '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   }).addTo(map);
 
-  L.marker([27.959463, 78.08266])
-    .addTo(map)
-    .bindPopup("Environmental and Engineering Solution");
 
-  L.marker([27.918733, 78.091695]).addTo(map).bindPopup("My Home").openPopup();
+  map.eachLayer(function (layer) {
+    if (layer instanceof L.Marker) {
+      map.removeLayer(layer);
+    }
+  });
+
+
+  Object.keys(cities).forEach(function (country) {
+    var cityName = cities[country];
+    var coordinates = getCoordinates(cityName); 
+
+    if (coordinates) {
+      L.marker(coordinates).addTo(map).bindPopup(cityName).openPopup();
+    }
+  });
+}
+
+
+function getCoordinates(cityName) {
+  switch (cityName) {
+    case "New York":
+      return [40.7128, -74.006];
+    case "London":
+      return [51.5074, -0.1278];
+    case "Toronto":
+      return [43.65107, -79.347015];
+    case "Sydney":
+      return [-33.8688, 151.2093];
+    case "Shanghai":
+      return [31.2304, 121.4737];
+    case "Tokyo":
+      return [35.6895, 139.6917];
+    case "Berlin":
+      return [52.52, 13.405];
+    case "Paris":
+      return [48.8566, 2.3522];
+    case "Moscow":
+      return [55.7558, 37.6176];
+    case "Sao Paulo":
+      return [-23.5505, -46.6333];
+    case "Johannesburg":
+      return [-26.2041, 28.0473];
+    case "Dubai":
+      return [25.276987, 55.296249];
+    case "Singapore":
+      return [1.3521, 103.8198];
+    case "Riyadh":
+      return [24.7136, 46.6753];
+    case "Kathmandu":
+      return [27.7172, 85.324];
+    default:
+      return null;
+  }
 }
 
 updateIndiaClock();
 updateClockForCountry("United States");
 showLocation();
+getCoordinates([40.7128, -74.006]);
