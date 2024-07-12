@@ -73,7 +73,7 @@ var timeZones = {
   
   function updateClockForCountry(country) {
     const timeZone = timeZones[country];
-  
+  //git checkup
     clearInterval(intervalId);
   
     intervalId = setInterval(function () {
